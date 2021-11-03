@@ -8,6 +8,7 @@ AddEventHandler('playerConnecting', function(name, setReason)
     print("GOT NEW PLAYER WITH ID: ", Identifiers)
     MySQL.Async.fetchAll("SELECT * FROM usi WHERE SteamHex = @SteamHex",{["@SteamHex"] = Identifiers}, 
     function(result)
+        print(result[1])
         print(result[1].Name)
         print(result[1].SteamHex)
         print(result[1].PermLevel)
@@ -17,7 +18,7 @@ AddEventHandler('playerConnecting', function(name, setReason)
     local SteamHex = result[1].SteamHex
     local Name = result[1].name
     local PermLevel = result[1].PermLevel
-    local IsWhitelisted = result[1].IsWhitelisted
+    local IsWhitelisted = result[1].IsWhiteListed
 
     if SteamHex == nil then
         print("SYSTEM IDENTIFIER FOUND IS: "+ Identifiers)
