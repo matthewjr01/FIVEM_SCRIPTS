@@ -1,6 +1,7 @@
 
 
-AddEventHandler('playerConnecting', function(name, setReason)
+AddEventHandler('playerConnecting', function(name, setReason, defferals)
+    deferrals.defer()
     local source = source
     Citizen.Wait(300)
     local Identifiers = GetPlayerIdentifier(source)
@@ -17,11 +18,13 @@ AddEventHandler('playerConnecting', function(name, setReason)
     local IsWhitelisted = result[1].IsWhitelisted
 
     if SteamHex == nil then
-        setReason('Could Not Find User!!!')
-        CancelEvent()
-        print("SYSTEM IDENTIFIER FOUND IS: "+ identifier)
+        print("SYSTEM IDENTIFIER FOUND IS: "+ Identifiers)
         print("DB IDENTIFIER FOUND IS: "+ SteamHex)
         print("USER NOT FOUND IN DB FOR WHITELIST!!! RETURNED NULL")
+        setReason('Could Not Find User!!!')
+        defferals.done(_U('ERROR!!!!'))
+        CancelEvent()
+        return
     end
 
     if Name ==nil then
@@ -29,6 +32,7 @@ AddEventHandler('playerConnecting', function(name, setReason)
         print(SteamHex)
         print("USER: NAME: NOT SET IN DB CORRECTLY!!!")
         CancelEvent()
+        return
     end
     
     if(IsWhitelisted == 0) then
@@ -36,6 +40,7 @@ AddEventHandler('playerConnecting', function(name, setReason)
         print(SteamHex)
         print("USER NOT WHITELISTED IN SERVER")
         CancelEvent()
+        return
     end
 end)
 
