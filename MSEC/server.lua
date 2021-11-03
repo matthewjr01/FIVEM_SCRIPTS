@@ -1,7 +1,9 @@
 
 
-AddEventHandler('playerConnecting', function(name, setReason)
+AddEventHandler('playerConnecting', function(name, setReason, deferrals)
+    deferrals.defer()
     local source = source
+    deferrals.update(_U('whitelist_check'))
     Citizen.Wait(300)
     local Identifiers = GetPlayerIdentifier(source)
     -- print(Identifiers)
@@ -10,6 +12,7 @@ AddEventHandler('playerConnecting', function(name, setReason)
     function(result)
         if result[1] == nil then
             setReason('USER NOT FOUND IN DB!!!')
+            deferrals.done(_U('not_whitelisted'))
             print(SteamHex)
             print("USER NOT SET IN DB!!!")
             CancelEvent()
@@ -20,6 +23,8 @@ AddEventHandler('playerConnecting', function(name, setReason)
         print(result[1].PermLevel)
         print(result[1].IsWhitelisted)
     end)
+
+    deferrals.done()
 end)
 
 
