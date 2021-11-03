@@ -6,9 +6,9 @@ AddEventHandler('playerConnecting', function(name, setReason)
     local Identifiers = GetPlayerIdentifier(source)
     print(Identifiers)
     print("GOT NEW PLAYER WITH ID: ", Identifiers)
-    MySQL.Async.fetchAll("SELECT * FROM `usi` WHERE `SteamHex` LIKE @SteamHex",{['@SteamHex'] = Identifiers}, 
+    MySQL.Async.fetchAll("SELECT * FROM usi WHERE SteamHex = @SteamHex",{["@SteamHex"] = Identifiers}, 
     function(result)
-        print(result)
+        print(result[1].name)
     end)
 
     local SteamHex = result[1].SteamHex
@@ -25,7 +25,7 @@ AddEventHandler('playerConnecting', function(name, setReason)
         return
     end
 
-    if Name ==nil then
+    if Name == nil then
         setReason('USER "NAME" NOT FOUND IN DB!!!')
         print(SteamHex)
         print("USER: NAME: NOT SET IN DB CORRECTLY!!!")
