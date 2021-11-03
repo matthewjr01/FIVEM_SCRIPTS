@@ -5,7 +5,7 @@ AddEventHandler('playerConnecting', function(name, setReason)
     Citizen.Wait(300)
     local Identifiers = GetPlayerIdentifier(source)
     print(Identifiers)
-    print("GOT NEW PLAYER WITH ID: ", identifier)
+    print("GOT NEW PLAYER WITH ID: ", Identifiers)
     MySQL.Async.fetchAll("SELECT * FROM `usi` WHERE `SteamHex` LIKE @SteamHex",{['@SteamHex'] = Identifiers}, 
     function(result)
         print(result)
@@ -16,7 +16,7 @@ AddEventHandler('playerConnecting', function(name, setReason)
     local PermLevel = result[1].PermLevel
     local IsWhitelisted = result[1].IsWhitelisted
 
-    if SteamHex == "" then
+    if SteamHex == nil then
         setReason('Could Not Find User!!!')
         CancelEvent()
         print("SYSTEM IDENTIFIER FOUND IS: "+ identifier)
@@ -24,7 +24,7 @@ AddEventHandler('playerConnecting', function(name, setReason)
         print("USER NOT FOUND IN DB FOR WHITELIST!!! RETURNED NULL")
     end
 
-    if Name == "" then
+    if Name ==nil then
         setReason('USER "NAME" NOT FOUND IN DB!!!')
         print(SteamHex)
         print("USER: NAME: NOT SET IN DB CORRECTLY!!!")
