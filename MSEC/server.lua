@@ -8,7 +8,7 @@ AddEventHandler('playerConnecting', function(name, setReason)
     print("GOT NEW PLAYER WITH ID: ", Identifiers)
     MySQL.Async.fetchAll("SELECT * FROM usi WHERE SteamHex = @SteamHex",{["@SteamHex"] = Identifiers}, 
     function(result)
-        print(result[1].name)
+        print(result[1].Name)
     end)
 
     local SteamHex = result[1].SteamHex
