@@ -1,7 +1,8 @@
-local identifier = PlayerIdentifier('steam', players_server_id)
+
 
 AddEventHandler('playerConnecting', function(name, setReason)
-    
+    local identifier = PlayerIdentifier('steam', players_server_id)
+    print("GOT NEW PLAYER WITH ID: "+ identifier)
     MySQL.Async.fetchAll("SELECT * FROM `usi` WHERE `SteamHex` LIKE @SteamHex",{['@SteamHex'] = identifier}, 
     function(result)
         print(result)
@@ -51,15 +52,3 @@ function PlayerIdentifier(type, id)
     end
     return false
 end
-
-
-
-function GET_DB_USER()
-    
-end
-
-RegisterCommand("get", function(source, args) 
-    local argString = table.concat(args, " ")
-        
-end)
-
