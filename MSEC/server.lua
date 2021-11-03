@@ -4,8 +4,9 @@ AddEventHandler('playerConnecting', function(name, setReason)
     local source = source
     Citizen.Wait(300)
     local Identifiers = GetPlayerIdentifier(source)
-    print("GOT NEW PLAYER WITH ID: "+ identifier)
-    MySQL.Async.fetchAll("SELECT * FROM `usi` WHERE `SteamHex` LIKE @SteamHex",{['@SteamHex'] = identifier}, 
+    print(Identifiers)
+    print("GOT NEW PLAYER WITH ID: ", identifier)
+    MySQL.Async.fetchAll("SELECT * FROM `usi` WHERE `SteamHex` LIKE @SteamHex",{['@SteamHex'] = Identifiers}, 
     function(result)
         print(result)
     end)
