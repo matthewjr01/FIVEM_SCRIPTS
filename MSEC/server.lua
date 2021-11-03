@@ -3,7 +3,7 @@
 AddEventHandler('playerConnecting', function(name, setReason, deferrals)
     deferrals.defer()
     local source = source
-    deferrals.update(_U('whitelist_check'))
+    deferrals.update('whitelist_check')
     Citizen.Wait(300)
     local Identifiers = GetPlayerIdentifier(source)
     -- print(Identifiers)
