@@ -12,7 +12,8 @@ AddEventHandler('playerConnecting', function(name, setReason, deferrals)
     function(result)
         if result[1] == nil then
             setReason('USER NOT FOUND IN DB!!!')
-            deferrals.done('not_whitelisted')
+            deferrals.update('not_whitelisted')
+            deferrals.defer("FAILED")
             print(SteamHex)
             print("USER NOT SET IN DB!!!")
             CancelEvent()
@@ -23,8 +24,8 @@ AddEventHandler('playerConnecting', function(name, setReason, deferrals)
         print(result[1].PermLevel)
         print(result[1].IsWhitelisted)
     end)
-
-    deferrals.done()
+    
+    
 end)
 
 
