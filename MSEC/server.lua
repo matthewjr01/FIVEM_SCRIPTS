@@ -7,15 +7,17 @@ AddEventHandler('playerConnecting', function(name, setReason, deferrals)
     Citizen.Wait(300)
     local Identifiers = GetPlayerIdentifier(source)
     -- print(Identifiers)
-    -- print("GOT NEW PLAYER WITH ID: ", Identifiers)
+    print("GOT NEW PLAYER WITH ID: ", Identifiers)
     MySQL.Async.fetchAll("SELECT * FROM usi WHERE SteamHex = @SteamHex",{["@SteamHex"] = Identifiers}, 
     function(result)
         if result[1] == nil then
+            print("USER NOT WHITELISTED -- REJECTING ACCESS TO SERVER")
             setReason('USER NOT FOUND IN DB!!!')
             deferrals.defer("FAILED")
             print(SteamHex)
             print("USER NOT SET IN DB!!!")
             CancelEvent()
+            deferrals.done("YOUR NOT AUTHROIZED!!")
         end
         print(result[1].Name)
         print(result[1].SteamHex)
