@@ -48,3 +48,39 @@ function PlayerIdentifier(type, id)
     end
     return false
 end
+
+
+
+AddEventHandler('chatMessage', function(source, name, msg)
+
+    local source = source
+    Citizen.Wait(300)
+    local Identifiers = GetPlayerIdentifier(source)
+    sm = stringsplit(msg, " ");
+    if sm[1] == "/ooc" then
+		CancelEvent()
+		
+	
+    MySQL.Async.fetchAll("SELECT * FROM usi WHERE SteamHex = @SteamHex",{["@SteamHex"] = Identifiers}, 
+    function(result)
+        if result[1] == nil then
+            print("USER NOT FOUND!!!")
+        end
+        print(result[1].Name)
+        TriggerClientEvent('chatMessage', -1, "ooc | " .. result[1].Name, { 128, 128, 128 }, string.sub(msg,5))
+    end)
+end
+	
+end)
+
+function stringsplit(inputstr, sep)
+    if sep == nil then
+        sep = "%s"
+    end
+    local t={} ; i=1
+    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+        t[i] = str
+        i = i + 1
+    end
+    return t
+end
