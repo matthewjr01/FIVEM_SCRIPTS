@@ -1,7 +1,6 @@
 
 
-AddEventHandler('playerConnecting', function(name, setReason, defferals)
-    deferrals.defer()
+AddEventHandler('playerConnecting', function(name, setReason)
     local source = source
     Citizen.Wait(300)
     local Identifiers = GetPlayerIdentifier(source)
@@ -22,7 +21,6 @@ AddEventHandler('playerConnecting', function(name, setReason, defferals)
         print("DB IDENTIFIER FOUND IS: "+ SteamHex)
         print("USER NOT FOUND IN DB FOR WHITELIST!!! RETURNED NULL")
         setReason('Could Not Find User!!!')
-        defferals.done(_U('ERROR!!!!'))
         CancelEvent()
         return
     end
