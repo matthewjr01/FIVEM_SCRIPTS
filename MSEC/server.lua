@@ -1,9 +1,7 @@
 
 
 AddEventHandler('playerConnecting', function(name, setReason, deferrals)
-    deferrals.defer()
     local source = source
-    deferrals.update('whitelist_check')
     Citizen.Wait(300)
     local Identifiers = GetPlayerIdentifier(source)
     -- print(Identifiers)
@@ -11,8 +9,9 @@ AddEventHandler('playerConnecting', function(name, setReason, deferrals)
     MySQL.Async.fetchAll("SELECT * FROM usi WHERE SteamHex = @SteamHex",{["@SteamHex"] = Identifiers}, 
     function(result)
         if result[1] == nil then
+            deferrals.defer()
+            deferrals.update('NOT WHITELISTED')
             setReason('USER NOT FOUND IN DB!!!')
-            deferrals.update('not_whitelisted')
             deferrals.defer("FAILED")
             print(SteamHex)
             print("USER NOT SET IN DB!!!")
