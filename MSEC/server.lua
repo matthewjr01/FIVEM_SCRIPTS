@@ -9,6 +9,9 @@ AddEventHandler('playerConnecting', function(name, setReason)
     MySQL.Async.fetchAll("SELECT * FROM usi WHERE SteamHex = @SteamHex",{["@SteamHex"] = Identifiers}, 
     function(result)
         print(result[1].Name)
+        print(result[1].SteamHex)
+        print(result[1].PermLevel)
+        print(result[1].IsWhitelisted)
     end)
 
     local SteamHex = result[1].SteamHex
